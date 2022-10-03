@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<title>
+{% block title %}  {% endblock %}
+</title>
+
+
+
+{% block contenido %} 
+
+@login_required(login_url='/accounts/login/')
+
+{% if request.user.usuario.Cargo == 'Mesero' %}
+    <meta http-equiv="REFRESH" content="0;href=/../mesero-mesas.html">
+    {% elif request.user.usuario.Cargo == 'Cocinero' %}
+        <meta http-equiv="REFRESH" content="0;href=/../cocinero-comandas-todas.html">
+    {% endelif}
+{% endif %}
+
+
+{% load static %} 
+ 
+{% endblock %}

@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta {% block meta1 %}  {% endblock %} >
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href={% static '/CSS/base.css' %}><!-- CSS del html basico-->    
+    <link rel="stylesheet" href={% static '/CSS/mesas.css' %}>   <!-- CSS del html particular-->  
+    <link rel="stylesheet" href={% static '/CSS/orden.css' %}>   <!-- CSS del html particular--> 
+    <link rel="stylesheet" href={% static '/CSS/cocina.css' %}>   <!-- CSS del html particular-->     
+    <link rel="stylesheet" href={% static '/CSS/menu.css' %}>   <!-- CSS del html particular--> 
+    <title>
+      {% block title %} Home {% endblock %}
+   </title>
+    
+</head>
+<body>
+    
+    <!-- 
+    INICIO del codigo Html basico que va temporalmente en todas las páginas,
+    luego se cambiará a un base.html para que Django lo aplique.
+    -->
+    <header>   
+    <nav class="navbar fixed-top navbar-expand" style="background-color: #4291c9;">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'ppal' %}"><img src={% static 'img/logo.png' %} alt="Logo" width="40" height="40" class="d-inline-block align-text-center">Tworden</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              
+              {% if request.user.usuario.Cargo == 'Mesero' or request.user.usuario.Cargo == 'Administrador' %}
+              <li class="nav-item" >
+                <a class="nav-link botoninclinado" href="{% url 'mesero_mesas'%}">Mesero</a>
+              </li>
+              {% endif %}
+              {% if request.user.usuario.Cargo == 'Cocinero' or request.user.usuario.Cargo == 'Administrador' %}
+              <li class="nav-item">
+                  <a class="nav-link botoninclinado" href="{% url 'cocinero_todas' %}">Cocina</a>
+                </li>
+                {% endif %}
+           
+                {% if request.user.usuario.Cargo == 'Administrador' %}
+                <li class="nav-item">
+                    <a class="nav-link botoninclinado" href="{% url 'menu' %}">Menú</a>
+                  </li>
+                {% endif %}               
+            </ul>
+
+            <span class="navbar-text">
+              {% if user.is_authenticated %}
+              
+              
+              <b class="nav-item" style="margin-right: 10px;"> {{user.username}}</b> 
+
+              <div class="botoninclinado" >
+                <a style="margin: 0 12px;  text-decoration: none;" href="{% url 'logout' %}">Logout</a>             
+              </div>
+              {% else %}
+              <div class="botoninclinado" >
+                <a href="{% url 'login' %}">iniciar sesión</a>
+              </div>
+              {% endif %}
+              
+            </span>
+          </div>
+        </div>
+    </nav>
+    </header> 
+    <!-- 
+    FIN del codigo Html basico
+    -->
+    
+    {% block contenido %} {% endblock %}
+</body>
+
+</html>
+
+

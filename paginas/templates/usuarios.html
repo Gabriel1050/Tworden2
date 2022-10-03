@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+<title>
+{% block title %} Lista de Usuarios {% endblock %}
+</title>
+
+
+{% block contenido %} 
+{% load static %} 
+<br><br><br><br><br><br>
+<div style=" min-width: 500px; max-width: 900px" class="tarjeta">        
+        <div  class="titulo table-title">
+            <div class="row">
+                <div class="col-sm-8"><h2> BASE DE DATOS EMPLEADOS </h2></div>
+                <div class="col-sm-4">
+                    <a href="registro.html"
+                    <button type="button" class="btn btn-primary">Agregar</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <table style=" width: Auto" class="cuerpo table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cargo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in usuarios %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.Cargo}}</td>
+                    <td>{{user.Rol}}</td>
+                    <td>
+                        <a href="#" class="edit" title="Editar" data-toggle="tooltip"><img src={% static 'img/icono_lapiz.png' %} width="30" height="30" alt="Editar"></a>
+                        |
+                        <a href="#" class="delete" title="Borrar" data-toggle="tooltip"><img src={% static 'img/icono_borrar.png' %} width="30" height="30" alt="Borrar"></a>
+                    </td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    
+</div>  
+
+{% endblock %}
